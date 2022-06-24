@@ -9,6 +9,8 @@ Hello There! :wave: Welcome to my Kodluyoruz Bootcamp repository. Under this rep
 - Add a loading Stage while posts and users are fecthing data from API.
 - Add a clickable event listener function on "Sıra No" to reverse user list.
 
+[Homework :link:](https://github.com/OzanYasin/Kodluyoruz-Bootcamp-K140/tree/master/Bootcamp-Homeworks/Week-1)
+
 ## License
 
 Distributed under the MIT License. See LICENSE.txt for more information.
