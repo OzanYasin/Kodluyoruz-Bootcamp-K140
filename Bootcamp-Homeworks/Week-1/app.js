@@ -1,10 +1,13 @@
+// Selectors
 const loadPostsButton = document.querySelector('#loadPost');
 const loadUserButton = document.querySelector('#loadUsers');
 
+// span that adds loading spinner
 let spinner = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span> Yükleniyor...`;
 
 loadPostsButton.addEventListener('click', () => {
   loadPostsButton.innerHTML = spinner;
+  // // 2 sec setTimeout to visualize spinner until fetch data
   setTimeout(() => {
     loadPostsButton.innerHTML = 'Daha Fazla Post';
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -16,24 +19,27 @@ loadPostsButton.addEventListener('click', () => {
   }, 2000);
 });
 
+// Rendering Posts
 const renderPost = (data = []) => {
   data.forEach((item) => {
-    const li = document.createElement('li');
+    // Creating LI element
+    const li = document.createElement('LI');
     li.innerHTML = `<div class="card">
   <div class="card-body">
     ${item.title}
   </div>
 </div>`;
+    // Selecting ul to append LI element to it
     document.querySelector('#ul-1').appendChild(li);
   });
 };
 
 let users = [];
+// Fecthing users
 const loadUsers = () => {
   // ---
   loadUserButton.innerHTML = spinner;
-  // span.classList.add()
-  // Timeout
+  // 2 sec setTimeout to visualize spinner until fetch data
   setTimeout(() => {
     // -----
     loadUserButton.innerHTML = 'Kullanici Bilgileri Yüklendi';
@@ -54,6 +60,7 @@ const loadUsers = () => {
   }, 2000);
 };
 
+// Event Listener for User Button
 loadUserButton.addEventListener('click', loadUsers);
 
 const userDom = document.querySelector('#user');
@@ -104,14 +111,15 @@ const renderUsers = (users = []) => {
 
   userDom.appendChild(table);
 
+  // Event Listener for 'Sıra No' to call reverseQueue function
   document.querySelector('#queueNo').addEventListener('click', reverseQueue);
 
   // ----- Reverse Function -----
-
   let queue = false;
 
   function reverseQueue() {
-    if (queue == false) {
+    if (!queue) {
+      // if queue == false
       tbody.innerHTML = users
         .map((user, index) => {
           return `<tr>
@@ -138,6 +146,16 @@ const renderUsers = (users = []) => {
 
       table.appendChild(tbody);
       userDom.appendChild(table);
+
+      document.querySelectorAll('.remove').forEach((button) => {
+        button.addEventListener('click', function () {
+          const status = confirm('Kaydı silmek üzeresiniz emin misiniz?');
+          if (status) {
+            const id = this.getAttribute('data-id');
+            renderUsers(users.filter((x) => x.id != id));
+          }
+        });
+      });
     } else {
       renderUsers(users);
       queue = false;
